@@ -12,11 +12,11 @@ class HttpWSSProtocol(websockets.WebSocketServerProtocol):
         try:
             #while True:
             request_line, headers = await websockets.http.read_message(self.reader)
-            #print(headers)
+            print(headers)
             method, path, version = request_line[:-2].decode().split(None, 2)
-            #print(self.reader)
+            print(self.reader)
         except Exception as e:
-            #print(e.args)
+            print(e.args)
             self.writer.close()
             self.ws_server.unregister(self)
 
@@ -44,7 +44,7 @@ class HttpWSSProtocol(websockets.WebSocketServerProtocol):
         response = ''
         try :
             alexaRequest = self.reader._buffer.decode('utf-8')
-            #print("Req-->"+alexaRequest)
+            print("Req-->"+alexaRequest)
             RequestJson = json.loads(alexaRequest)['request']['intent']['slots']
 
             if 'is' not in RequestJson['query'].values() and 'what' not in RequestJson['query'].values():
@@ -121,7 +121,7 @@ def _read_ready(self):
     if self._conn_lost:
         return
     try:
-        time.sleep(.10)
+        time.sleep(.30)
         data = self._sock.recv(self.max_size)
     except (BlockingIOError, InterruptedError):
         pass
